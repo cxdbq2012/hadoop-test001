@@ -22,10 +22,11 @@ public class MyReduce extends MapReduceBase implements Reducer<Text,IntWritable,
 		log.info("MyReduce .... .. ... . . ... . {}",key);
 		int sum = 0;
 		while(values!=null && values.hasNext()){
-			sum += values.next().get();
+			sum += 1;
 		}
 
 		output.collect(key,new IntWritable(sum));
+//		output.collect(new Text(key.toString()+"-time"),new IntWritable(sum));
 	}
 
 }

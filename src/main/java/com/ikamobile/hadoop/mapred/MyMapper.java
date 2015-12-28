@@ -21,13 +21,36 @@ public class MyMapper extends MapReduceBase implements Mapper<LongWritable, Text
 			throws IOException {
 
 		log.info("myMapper .... .. ... . . ... . {}",value);
+		String v = value.toString();
+		if(value.toString().contains("航班查询处理时间："))
+		{
 
-		String[]strs = value.toString().split("\t");
-		if(strs!=null && strs.length>1){
-			output.collect(new Text(strs[0]),new IntWritable(1));
-		} else {
-			output.collect(new Text("null"+value.toString()),new IntWritable(1));
+			String[]vs = v.split("航班查询处理时间：");
+			String time = vs[1].replaceAll("毫秒","");
+			int timeInt = Integer.valueOf(time);
+
+			if(timeInt<30){
+				output.collect(new Text("less-30"),new IntWritable(timeInt));
+			} else if (timeInt >= 30 && timeInt < 60 ) {
+				output.collect(new Text("less-60"),new IntWritable(timeInt));
+			} else if(timeInt >= 60 && timeInt < 120 ) {
+				output.collect(new Text("less-120"),new IntWritable(timeInt));
+			} else if(timeInt >= 120 && timeInt < 240 ) {
+				output.collect(new Text("less-240"),new IntWritable(timeInt));
+			} else if(timeInt >= 240 && timeInt < 480 ) {
+				output.collect(new Text("less-480"),new IntWritable(timeInt));
+			} else if(timeInt >= 480 && timeInt < 960 ) {
+				output.collect(new Text("less-960"),new IntWritable(timeInt));
+			} else if(timeInt >= 960 && timeInt < 2000 ) {
+				output.collect(new Text("less-2000"),new IntWritable(timeInt));
+			} else if(timeInt >= 2000 ) {
+				output.collect(new Text("grate-2000"),new IntWritable(timeInt));
+			}
+
 		}
+
+
+
 
 
 		

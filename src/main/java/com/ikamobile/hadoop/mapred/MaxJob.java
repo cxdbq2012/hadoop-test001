@@ -17,9 +17,9 @@ public class MaxJob {
 	public static void main(String[] args) throws IOException {
 		JobConf conf = new JobConf(MaxJob.class);
 		conf.setJobName("Max job...123");
-		FileInputFormat.addInputPath(conf,new Path("/user/root/googleips"));
+		FileInputFormat.addInputPath(conf,new Path("/user/root/sme/"));
 		SimpleDateFormat sdf = new SimpleDateFormat("HH_mm_ss");
-		FileOutputFormat.setOutputPath(conf,new Path("/user/root/maxjob-"+sdf.format(new Date())));
+		FileOutputFormat.setOutputPath(conf,new Path("/user/root/smeJob-"+sdf.format(new Date())));
 		
 		conf.setMapperClass(MyMapper.class);
 		conf.setReducerClass(MyReduce.class);
